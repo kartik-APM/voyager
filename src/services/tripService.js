@@ -1,17 +1,10 @@
 import { supabase } from '../lib/supabase';
 
 export const tripService = {
-  async getUserTrips(userId) {
+  async getAllTrips() {
     const { data, error } = await supabase
       .from('trips')
-      .select(`
-        *,
-        trip_destinations (
-          *,
-          destination:destinations (*)
-        )
-      `)
-      .eq('user_id', userId)
+      .select('*')
       .order('created_at', { ascending: false });
     
     if (error) throw error;

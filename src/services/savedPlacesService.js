@@ -1,14 +1,13 @@
 import { supabase } from '../lib/supabase';
 
 export const savedPlacesService = {
-  async getUserSavedPlaces(userId) {
+  async getAllSavedPlaces() {
     const { data, error } = await supabase
       .from('saved_places')
       .select(`
         *,
         destination:destinations (*)
       `)
-      .eq('user_id', userId)
       .order('created_at', { ascending: false });
     
     if (error) throw error;
